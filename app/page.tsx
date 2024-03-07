@@ -9,10 +9,10 @@ export default function Home() {
   return (
     <main className={styles.container}>
       <h1 className={styles.title}>Navigating Tomorrow&apos;s Logistics</h1>
-      <div className={styles.overlay}></div> {/* Dark layer */}
+      <div className={styles.overlay}></div>
       <button
         className={styles.button}
-        onClick={() => router.push('/sign-in')}
+        onClick={() => router.push('/access')}
       >Get Started</button>
       <video autoPlay muted loop className={styles.video}>
         <source src="/videos/globe.mp4" type="video/mp4" />
