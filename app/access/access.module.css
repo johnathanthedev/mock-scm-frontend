@@ -1,0 +1,82 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-color-100);
+  width: 100vw;
+  height: 100vh;
+}
+
+.card {
+  width: 80%;
+  max-width: 400px;
+  background-color: var(--background-color-200);
+  border-radius: 5px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.cardHeader {
+  text-align: center;
+}
+
+.title {
+  font-size: 30px;
+  color: var(--text-color-100);
+}
+
+.subtext p {
+  color: var(--text-color-200);
+}
+
+.form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #212121;
+  color: white;
+  font-size: 16px;
+}
+
+.input::placeholder {
+  color: #626262;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--brand-color);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: var(--brand-hover-color-100);
+}
+
+.logoWrapper {
+  width: 125px;
+  margin: 0 auto .5rem;
+}
+
+@media (max-width: 600px) {
+  .card {
+    width: 90%;
+  }
+}
