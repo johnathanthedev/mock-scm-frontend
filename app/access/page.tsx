@@ -1,8 +1,20 @@
+'use client'
+
+import Button from "@/app/components/Button/Button";
 import Image from "next/image";
+import { FormEvent } from "react";
 import styles from "./access.module.css";
 import logo from "/public/images/scm-logo.png";
 
 export default function Home() {
+  const handleClick = () => {
+
+  }
+
+  const handleFormSubmit = (e: FormEvent) => {
+    return e.preventDefault();
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -17,15 +29,19 @@ export default function Home() {
             <p>Submit to sign in or create an account</p>
           </div>
         </div>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleFormSubmit}>
           <input
             className={styles.input}
             type="text"
             placeholder="Username"
           />
-          <button className={styles.submitButton} type="submit">
-            Submit
-          </button>
+          <Button
+            fluid
+            text={'Submit'}
+            size={"Small"}
+            variant={"Primary"}
+            onClick={handleClick}
+          />
         </form>
       </div>
     </div>

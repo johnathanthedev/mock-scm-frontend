@@ -36,14 +36,13 @@
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  gap: .5rem;
   width: 100%;
 }
 
 .input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
   border: none;
   border-radius: 5px;
   background-color: #212121;
@@ -53,21 +52,6 @@
 
 .input::placeholder {
   color: #626262;
-}
-
-.submitButton {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: var(--brand-color);
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.submitButton:hover {
-  background-color: var(--brand-hover-color-100);
 }
 
 .logoWrapper {
