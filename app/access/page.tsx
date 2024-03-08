@@ -1,14 +1,43 @@
 'use client'
 
-import Button from "@/app/components/Button/Button";
+import Button from "@/components/Button/Button";
+import { useAlert } from "@/global-state/alert/alert.context";
+import { createUser, signIn } from "@/services/accountsService";
 import Image from "next/image";
-import { FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./access.module.css";
 import logo from "/public/images/scm-logo.png";
 
 export default function Home() {
-  const handleClick = () => {
+  const { triggerAlert } = useAlert();
+  const router = useRouter();
 
+  const [username, setUsername] = useState<string>("");
+  const [loading, setLoading] = useState(false);;
+
+  const handleClick = async () => {
+    try {
+      setLoading(true);
+
+      const loginResults = await signIn({ username })
+
+      if (loginResults.status !== 200) {
+        const createUserResults = await createUser({ username })
+
+        if (createUserResults.status !== 201) {
+          setLoading(false);
+          return triggerAlert(createUserResults.data.error, "Danger")
+        }
+      }
+
+      setLoading(false);
+      localStorage.setItem("username", username)
+      router.push("/dashboard")
+
+    } catch (error: any) {
+      triggerAlert(error.error, "Danger")
+    }
   }
 
   const handleFormSubmit = (e: FormEvent) => {
@@ -34,6 +63,7 @@ export default function Home() {
             className={styles.input}
             type="text"
             placeholder="Username"
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
           />
           <Button
             fluid
@@ -41,6 +71,7 @@ export default function Home() {
             size={"Small"}
             variant={"Primary"}
             onClick={handleClick}
+            loading={loading}
           />
         </form>
       </div>

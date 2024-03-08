@@ -7,6 +7,7 @@ export interface Props {
   onClick?: () => void;
   className?: string;
   variant: ButtonVariant;
+  loading?: boolean;
 }
 
 export type ButtonVariant = "Primary" | "Dark";
