@@ -1,14 +1,22 @@
 'use client'
 
-import Button from "@/app/components/Button/Button";
+import Button from "@/components/Button/Button";
+import { useAlert } from "@/global-state/alert/alert.context";
 import Image from "next/image";
-import { FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./access.module.css";
 import logo from "/public/images/scm-logo.png";
 
 export default function Home() {
-  const handleClick = () => {
+  const { triggerAlert } = useAlert();
 
+  const [username, setUsername] = useState<string>("");
+
+  const handleClick = async () => {
+    triggerAlert("Hello World", "Danger");
+    // const loginResults = await signIn({ username })
+
+    // console.log(loginResults)
   }
 
   const handleFormSubmit = (e: FormEvent) => {
@@ -34,6 +42,7 @@ export default function Home() {
             className={styles.input}
             type="text"
             placeholder="Username"
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
           />
           <Button
             fluid

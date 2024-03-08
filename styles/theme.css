@@ -16,6 +16,10 @@
   --text-color-100: #ffffff;
   --text-color-200: #6D6D6D;
   --text-color-300: #626262;
+
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
 }
 
 [data-theme="dark"] {}

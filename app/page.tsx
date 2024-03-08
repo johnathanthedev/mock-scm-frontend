@@ -1,6 +1,6 @@
 'use client'
 
-import Button from "@/app/components/Button/Button";
+import Button from "@/components/Button/Button";
 import { useRouter } from "next/navigation";
 import styles from "./homepage.module.css";
 

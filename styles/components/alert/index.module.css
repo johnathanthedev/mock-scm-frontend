@@ -1,0 +1,33 @@
+.alert {
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  position: absolute;
+  z-index: 1000;
+  width: 80%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0s linear 0.5s;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 1rem;
+}
+
+.alert.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.success {
+  background-color: var(--success-color);
+}
+
+.warning {
+  background-color: var(--warning-color);
+}
+
+.danger {
+  background-color: var(--danger-color);
+}
