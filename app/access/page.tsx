@@ -2,21 +2,42 @@
 
 import Button from "@/components/Button/Button";
 import { useAlert } from "@/global-state/alert/alert.context";
+import { createUser, signIn } from "@/services/accountsService";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./access.module.css";
 import logo from "/public/images/scm-logo.png";
 
 export default function Home() {
   const { triggerAlert } = useAlert();
+  const router = useRouter();
 
   const [username, setUsername] = useState<string>("");
+  const [loading, setLoading] = useState(false);;
 
   const handleClick = async () => {
-    triggerAlert("Hello World", "Danger");
-    // const loginResults = await signIn({ username })
+    try {
+      setLoading(true);
 
-    // console.log(loginResults)
+      const loginResults = await signIn({ username })
+
+      if (loginResults.status !== 200) {
+        const createUserResults = await createUser({ username })
+
+        if (createUserResults.status !== 201) {
+          setLoading(false);
+          return triggerAlert(createUserResults.data.error, "Danger")
+        }
+      }
+
+      setLoading(false);
+      localStorage.setItem("username", username)
+      router.push("/dashboard")
+
+    } catch (error: any) {
+      triggerAlert(error.error, "Danger")
+    }
   }
 
   const handleFormSubmit = (e: FormEvent) => {
@@ -50,6 +71,7 @@ export default function Home() {
             size={"Small"}
             variant={"Primary"}
             onClick={handleClick}
+            loading={loading}
           />
         </form>
       </div>
