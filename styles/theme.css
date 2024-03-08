@@ -5,17 +5,17 @@
   --brand-saturation: 100%;
   --brand-lightness: 60%;
   --brand-hover-lightness: 50%;
-  
+
   --background-color-100: #000000;
   --background-color-200: #141414;
   --background-color-300: #212121;
 
-  --brand-hover-color-100: hsl(var(--brand-hue), var(--brand-saturation), var(--brand-hover-lightness));
+  --primary-hover-color-100: hsl(var(--brand-hue), var(--brand-saturation), var(--brand-hover-lightness));
+  --dark-hover-color-100: hsl(0, 0%, 5%);
 
   --text-color-100: #ffffff;
   --text-color-200: #6D6D6D;
   --text-color-300: #626262;
 }
 
-[data-theme="dark"] {
-}
+[data-theme="dark"] {}
