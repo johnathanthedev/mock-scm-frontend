@@ -1,26 +1,29 @@
 'use client'
 
-import Navigation from "@/components/Navigation/Navigation"
+import OperationsList from "@/components/features/OperationsList/OperationsList"
+import Navigation from "@/components/shared/Navigation/Navigation"
+import { useRouter, useSearchParams } from "next/navigation"
+import styles from "./index.module.css"
 
 export default function Dashboard() {
-  // useEffect(() => {
-  // const ws = new WebSocket('ws://localhost:8080/ws?room=2');
+  const router = useRouter();
+  const searchParams = useSearchParams()
 
-  // ws.onopen = () => console.log('Connected to WS');
-  // ws.onmessage = (event) => {
-  //   const data = JSON.parse(event.data);
-  //   console.log('Message received: ', data);
-  // };    
-  // ws.onclose = () => console.log('Disconnected from WS');
-  // ws.onerror = (error) => console.error('WebSocket error: ', error);
+  const operationIdSearchParams = searchParams.get('operation-id')
 
-  // return () => {
-  //   console.log('Closing WS connection');
-  //   ws.close();
-  // };
-  // }, []);
+  const handleOperationClick = (operationID: string) => {
+    router.push(`/dashboard?operation-id=${operationID}`)
+  }
 
-  return <div>
+  return <div className={styles.container}>
     <Navigation />
+    <div className={styles.dashboardContent}>
+      <div className={styles.operationsListWrapper}>
+        <OperationsList onClick={handleOperationClick} operationID={operationIdSearchParams} />
+      </div>
+      <div className={styles.operationOverviewWrapper}>
+
+      </div>
+    </div>
   </div>
 }

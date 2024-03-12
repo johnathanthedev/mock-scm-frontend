@@ -10,6 +10,8 @@
   --background-color-200: #141414;
   --background-color-300: #212121;
 
+  --dark-400: #2C2C2C;
+
   --primary-hover-color-100: hsl(var(--brand-hue), var(--brand-saturation), var(--brand-hover-lightness));
   --dark-hover-color-100: hsl(0, 0%, 5%);
 

@@ -1,6 +1,6 @@
 'use client'
 
-import Button from "@/components/Button/Button";
+import Button from "@/components/shared/Button/Button";
 import { useAlert } from "@/global-state/alert/alert.context";
 import { createUser, signIn } from "@/services/accountsService";
 import Image from "next/image";

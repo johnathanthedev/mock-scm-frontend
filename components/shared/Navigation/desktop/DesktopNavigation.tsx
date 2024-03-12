@@ -1,7 +1,7 @@
 'use client'
 
-import FacilityIcon from "@/components/icons/FacilityIcon";
-import HomeIcon from "@/components/icons/HomeIcon";
+import FacilityIcon from "@/components/shared/icons/FacilityIcon";
+import HomeIcon from "@/components/shared/icons/HomeIcon";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./index.module.css";
