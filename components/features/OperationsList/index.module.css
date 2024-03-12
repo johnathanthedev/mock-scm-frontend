@@ -1,6 +1,7 @@
 .container {
   background-color: var(--background-color-200);
   min-height: 82.5vh;
+  border-radius: 3px;
 }
 
 .container h1 {

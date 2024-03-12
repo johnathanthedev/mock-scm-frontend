@@ -17,8 +17,44 @@
 
 .operationOverviewWrapper {
   width: 68.5%;
-  background-color: yellow;
-  height: 200px;
+  height: 82.5vh;
+  background-color: var(--background-color-200);
+  min-height: 82.5vh;
+  padding: 1rem;
+  border-radius: 3px;
+}
+
+.overviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.overviewActions {
+  display: flex;
+  align-items: center;
+}
+
+.overviewActions span:hover {
+  cursor: pointer;
+}
+
+.overviewTitleWrapper {
+  color: var(--text-color-100);
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.overviewActions {}
+
+.overviewActions span {
+  color: var(--brand-color);
+  margin-right: 1rem;
+}
+
+.mapWrapper {
+  padding-top: 1rem;
+  height: calc(82.5vh - 100px);
 }
 
 @media (max-width: 1023px) {
