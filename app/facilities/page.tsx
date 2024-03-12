@@ -1,11 +1,11 @@
 'use client'
 
-import Navigation from "@/components/Navigation/Navigation";
+import Navigation from "@/components/shared/Navigation/Navigation";
 
 export default function page() {
   return (
-    <h1>
+    <div>
       <Navigation />
-    </h1>
+    </div>
   )
 }

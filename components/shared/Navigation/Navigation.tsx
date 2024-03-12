@@ -7,12 +7,12 @@ const MobileNavigation = dynamic(() => import('./mobile/MobileNavigation'), { ss
 const DesktopNavigation = dynamic(() => import('./desktop/DesktopNavigation'), { ssr: false });
 
 export default function Navigation() {
-  const { isMobile } = useReactResponsive();
+  const { isDesktop } = useReactResponsive();
 
   const renderContent = () => {
-    if (isMobile) return <MobileNavigation />;
+    if (isDesktop) return <DesktopNavigation />;
 
-    return <DesktopNavigation />
+    return <MobileNavigation />;
   }
 
   return renderContent()
