@@ -1,27 +1,25 @@
 'use client'
 
-import OperationsList from "@/components/features/OperationsList/OperationsList"
+import OperationsPanel from "@/components/features/OperationsPanel/OperationsPanel"
 import Button from "@/components/shared/Button/Button"
-import GoogleMaps from "@/components/shared/GoogleMaps/GoogleMaps"
 import Navigation from "@/components/shared/Navigation/Navigation"
-import { useRouter, useSearchParams } from "next/navigation"
+import { PanelTypeName } from "@/types/components/operations-panel/index.types"
+import { useSearchParams } from "next/navigation"
+import { useState } from "react"
 import styles from "./index.module.css"
 
 export default function Dashboard() {
-  const router = useRouter();
   const searchParams = useSearchParams()
 
   const operationIdSearchParams = searchParams.get('operation-id')
 
-  const handleOperationClick = (operationID: string) => {
-    router.push(`/dashboard?operation-id=${operationID}`)
-  }
+  const [operationsPanelType, setOperationsPanelType] = useState<PanelTypeName>(PanelTypeName.List)
 
   return <div className={styles.container}>
     <Navigation />
     <div className={styles.dashboardContent}>
-      <div className={styles.operationsListWrapper}>
-        <OperationsList onClick={handleOperationClick} operationID={operationIdSearchParams} />
+      <div className={styles.operationsPanelWrapper}>
+        <OperationsPanel type={operationsPanelType} operationID={operationIdSearchParams} />
       </div>
       <div className={styles.operationOverviewWrapper}>
         <div className={styles.overviewHeader}>
@@ -33,8 +31,8 @@ export default function Dashboard() {
             <Button text={"Run Simulation"} onClick={() => null} size={"Small"} variant={"Primary"} />
           </div>
         </div>
-        <div id="map" className={styles.mapWrapper}>
-          <GoogleMaps />
+        <div className={styles.mapWrapper}>
+          {/* <GoogleMaps /> */}
         </div>
       </div>
     </div>

@@ -1,21 +1,24 @@
 'use client'
 
 import Badge from "@/components/shared/Badge/Badge"
+import Button from "@/components/shared/Button/Button"
 import Loading from "@/components/shared/Loading/Loading"
 import { getOperationsList } from "@/services/operations-service"
 import { BadgeTypes } from "@/types/components/badge.types"
 import { Props } from "@/types/components/operations-list.types"
 import { OperationDto } from "@/types/dtos/operations/index.types"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { currentOperationClasses, operationActiveClasses, operationJoinStatusClasses } from "./data/classes.data"
 import styles from "./index.module.css"
 import globeVector from "/public/images/globe-icon.svg"
 
 export default function OperationsList({
-  onClick,
   operationID
 }: Props) {
+  const router = useRouter();
+
   const [loading, setLoading] = useState(true);
   const [operations, setOperations] = useState<null | Array<OperationDto>>(null);
   const [currentOperation, setCurrentOperation] = useState("");
@@ -47,9 +50,12 @@ export default function OperationsList({
     getData();
   }, [operationID])
 
+  useEffect(() => {
+    router.push(`/dashboard?operation-id=${operationID}`)
+  }, [operationID, router])
+
   const handleOnClick = (operationID: string): void => {
     setCurrentOperation(operationID);
-    onClick(operationID);
   }
 
   const renderContent = () => {
@@ -60,27 +66,40 @@ export default function OperationsList({
     };
 
     if (!!operations && operations.length > 0) {
-      return operations.map((operation: OperationDto) => {
-        return <div
-          key={operation.ID}
-          onClick={() => handleOnClick(operation.ID)}
-          className={currentOperationClasses(operation.ID, currentOperation)}
-        >
-          <div className={styles.globeIconWrapper}>
-            <Image src={globeVector} alt="Globe icon" />
-          </div>
-          <div className={styles.operationDetails}>
-            <div className={styles.left}>
-              <p className={styles.operationName}>{operation.Name}</p>
-              <p className={styles.scheduledDeliveries}>0 scheduled deliveries</p>
+      return <div className={styles.operationsWrapper}>
+        <div className={styles.listWrapper}>
+          {operations.map((operation: OperationDto) => {
+            return <div
+              key={operation.ID}
+              onClick={() => handleOnClick(operation.ID)}
+              className={currentOperationClasses(operation.ID, currentOperation)}
+            >
+              <div className={styles.globeIconWrapper}>
+                <Image src={globeVector} alt="Globe icon" />
+              </div>
+              <div className={styles.operationDetails}>
+                <div className={styles.left}>
+                  <p className={styles.operationName}>{operation.Name}</p>
+                  <p className={styles.scheduledDeliveries}>0 scheduled deliveries</p>
+                </div>
+                <div className={styles.right}>
+                  <p className={operationActiveClasses(operation.Status)}>{operation.Status}</p>
+                  <p className={operationJoinStatusClasses(operation.Joined)}>{operation.Joined ? <Badge text={"Joined"} type={BadgeTypes.Default} /> : <span>Join</span>}</p>
+                </div>
+              </div>
             </div>
-            <div className={styles.right}>
-              <p className={operationActiveClasses(operation.Status)}>{operation.Status}</p>
-              <p className={operationJoinStatusClasses(operation.Joined)}>{operation.Joined ? <Badge text={"Joined"} type={BadgeTypes.Default} /> : <span>Join</span>}</p>
-            </div>
-          </div>
+          })}
         </div>
-      })
+
+        <div className={styles.footer}>
+          <Button
+            onClick={() => null}
+            text={"Create New Operation"}
+            size={"Small"}
+            variant={"Primary"}
+          />
+        </div>
+      </div>
     }
 
     if (!!operations && operations.length === 0) {
@@ -93,9 +112,7 @@ export default function OperationsList({
       className={styles.container}
     >
       <h1>Operations</h1>
-      <div className={styles.operationsWrapper}>
-        {renderContent()}
-      </div>
+      {renderContent()}
     </div>
   )
 }
