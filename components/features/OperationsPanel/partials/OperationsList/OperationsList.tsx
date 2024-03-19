@@ -51,11 +51,12 @@ export default function OperationsList({
   }, [operationID])
 
   useEffect(() => {
-    router.push(`/dashboard?operation-id=${operationID}`)
+    setCurrentOperation(operationID ?? "");
   }, [operationID, router])
 
+
   const handleOnClick = (operationID: string): void => {
-    setCurrentOperation(operationID);
+    router.push(`/dashboard?operation-id=${operationID}`)
   }
 
   const renderContent = () => {
