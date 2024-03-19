@@ -1,7 +1,7 @@
 'use client'
 
 import OperationsPanel from "@/components/features/OperationsPanel/OperationsPanel"
-import Button from "@/components/shared/Button/Button"
+import GoogleMaps from "@/components/shared/GoogleMaps/GoogleMaps"
 import Navigation from "@/components/shared/Navigation/Navigation"
 import { PanelTypeName } from "@/types/components/operations-panel/index.types"
 import { useSearchParams } from "next/navigation"
@@ -22,7 +22,7 @@ export default function Dashboard() {
         <OperationsPanel type={operationsPanelType} operationID={operationIdSearchParams} />
       </div>
       <div className={styles.operationOverviewWrapper}>
-        <div className={styles.overviewHeader}>
+        {/* <div className={styles.overviewHeader}>
           <div className={styles.overviewTitleWrapper}>
             <h1>Map Overview</h1>
           </div>
@@ -30,9 +30,9 @@ export default function Dashboard() {
             <span>Edit Operation Details</span>
             <Button text={"Run Simulation"} onClick={() => null} size={"Small"} variant={"Primary"} />
           </div>
-        </div>
+        </div> */}
         <div className={styles.mapWrapper}>
-          {/* <GoogleMaps /> */}
+          <GoogleMaps />
         </div>
       </div>
     </div>

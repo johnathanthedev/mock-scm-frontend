@@ -63,5 +63,7 @@ export default function GoogleMaps() {
     initializeMap();
   }, []);
 
-  return <div className={`${styles.container} w-full`} ref={mapRef} />;
+  return <div className={`${styles.container} w-full`}>
+    <div ref={mapRef} className={`h-full w-full`} />
+  </div>;
 }
