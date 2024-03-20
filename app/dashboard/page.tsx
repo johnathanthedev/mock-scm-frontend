@@ -40,7 +40,7 @@ export default function Dashboard() {
         </div>
         <div className={mapWrapperClasses}>
           {!operationID ? <div className={styles.selectionRequiredContainer}>
-            <span>Create or Join an operation to view map</span>
+            <span>Select or Join an operation to view map</span>
           </div> : <GoogleMaps />}
         </div>
       </div>
