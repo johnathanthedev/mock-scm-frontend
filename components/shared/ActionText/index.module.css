@@ -1,0 +1,9 @@
+.container {}
+
+.container span {
+  color: var(--brand-color);
+}
+
+.container:hover {
+  cursor: pointer;
+}
