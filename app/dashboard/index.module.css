@@ -28,6 +28,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem;
 }
 
 .overviewActions {
@@ -54,6 +55,20 @@
 
 .mapWrapper {
   height: 100%;
+}
+
+.selectionRequiredWrapper {
+  padding: 1rem;
+}
+
+.selectionRequiredContainer {
+  width: 100%;
+  height: calc(100vh - 257px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color-100);
+  background-color: var(--background-color-400);
 }
 
 @media (max-width: 1023px) {

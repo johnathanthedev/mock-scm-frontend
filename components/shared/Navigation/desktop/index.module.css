@@ -55,3 +55,7 @@
 .navigationItem:hover {
   cursor: pointer;
 }
+
+.logoWrapper:hover {
+  cursor: pointer;
+}

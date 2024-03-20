@@ -18,7 +18,7 @@ export default function MobileNavigation() {
   return (
     <div className={styles.container}>
       <div className={styles.logoWrapper}>
-        <Image src={logo} alt="Supply Chain Management Globe logo" />
+        <Image onClick={() => router.push("/dashboard")} src={logo} alt="Supply Chain Management Globe logo" />
       </div>
       <div className={styles.menuWrapper} onClick={toggleDrawer}>
         <Image src={menu} alt="Menu icon" />
@@ -26,12 +26,6 @@ export default function MobileNavigation() {
       {isDrawerOpen && <div className={styles.backdrop} onClick={toggleDrawer}></div>}
       <div className={isDrawerOpen ? styles.drawerOpen : styles.drawerClosed}>
         <div className={styles.navigationItemsContainer}>
-          <div onClick={() => router.push("/dashboard")} className={`${currentPath === "/dashboard" && styles.active} ${styles.navigationItem}`}>
-            <span>Home</span>
-          </div>
-          <div onClick={() => router.push("/facilities")} className={`${currentPath === "/facilities" && styles.active} ${styles.navigationItem}`}>
-            <span>Facilities</span>
-          </div>
         </div>
       </div>
     </div>
