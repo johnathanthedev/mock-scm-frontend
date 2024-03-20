@@ -4,18 +4,14 @@
   background-color: var(--background-color-200);
   border-radius: 3px;
   overflow: hidden;
-  /* Prevent overflow during transitions */
   position: relative;
-  /* For absolutely positioned transitioning elements */
 }
 
 .content {
   width: 100%;
   position: absolute;
-  /* Ensure transitioning content does not affect layout */
 }
 
-/* Add these for slide-in and slide-out animations */
 @keyframes slideInFromLeft {
   from {
     transform: translateX(-100%);
