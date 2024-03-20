@@ -7,6 +7,7 @@ import { getOperationsList } from "@/services/operations-service"
 import { BadgeTypes } from "@/types/components/badge.types"
 import { Props } from "@/types/components/operations-list.types"
 import { OperationDto } from "@/types/dtos/operations/index.types"
+import classNames from "classnames"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -15,7 +16,9 @@ import styles from "./index.module.css"
 import globeVector from "/public/images/globe-icon.svg"
 
 export default function OperationsList({
-  operationID
+  operationID,
+  onClick,
+  className
 }: Props) {
   const router = useRouter();
 
@@ -54,9 +57,13 @@ export default function OperationsList({
     setCurrentOperation(operationID ?? "");
   }, [operationID, router])
 
+  const classStyles = classNames({
+    [styles.container]: true,
+    className
+  })
 
   const handleOnClick = (operationID: string): void => {
-    router.push(`/dashboard?operation-id=${operationID}`)
+    onClick(operationID);
   }
 
   const renderContent = () => {
@@ -110,7 +117,7 @@ export default function OperationsList({
 
   return (
     <div
-      className={styles.container}
+      className={classStyles}
     >
       <h1>Operations</h1>
       {renderContent()}

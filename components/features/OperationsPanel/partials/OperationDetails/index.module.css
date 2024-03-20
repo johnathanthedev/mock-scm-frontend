@@ -1,0 +1,15 @@
+.container {
+  padding: 1rem;
+}
+
+.headerWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.container h1 {
+  font-size: 36px;
+  color: var(--text-color-100);
+  font-weight: bold;
+  padding-left: 1rem;
+}

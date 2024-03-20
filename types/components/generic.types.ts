@@ -7,3 +7,5 @@ export interface ComponentStyle {
 export interface IconComponentProps {
   color: string;
 }
+
+export type classnameType = undefined | string;
