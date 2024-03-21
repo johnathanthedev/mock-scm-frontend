@@ -15,13 +15,20 @@ export function generateCurvedPath(start: { lat: number; lng: number; }, end: { 
   let path = [];
   const { lat: lat1, lng: lng1 } = start;
   const { lat: lat2, lng: lng2 } = end;
+  const dx = lng2 - lng1;
+  const dy = lat2 - lat1;
+
+  // Determine the direction of the curve based on the curvature sign
+  const curveDirection = curvature < 0 ? -1 : 1;
 
   for (let i = 0; i < numPoints; i++) {
     const t = i / (numPoints - 1);
-    const x = lng1 * (1 - t) + lng2 * t;
-    const y = lat1 * (1 - t) + lat2 * t;
-    const xt = x + Math.sin(Math.PI * t) * curvature;
-    const yt = y + Math.cos(Math.PI * t) * curvature;
+    const x = lng1 + dx * t;
+    const y = lat1 + dy * t;
+
+    // Apply curvature only to the y-coordinate (latitude)
+    const xt = x;
+    const yt = y + curveDirection * Math.sin(Math.PI * t) * Math.abs(curvature);
 
     path.push({ lat: yt, lng: xt });
   }

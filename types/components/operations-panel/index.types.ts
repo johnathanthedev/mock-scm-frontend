@@ -1,5 +1,4 @@
 export interface Props {
-  type: PanelTypeName;
   operationID: null | string;
 }
 
