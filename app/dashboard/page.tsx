@@ -4,29 +4,19 @@ import OperationsPanel from "@/components/features/OperationsPanel/OperationsPan
 import Button from "@/components/shared/Button/Button"
 import GoogleMaps from "@/components/shared/GoogleMaps/GoogleMaps"
 import Navigation from "@/components/shared/Navigation/Navigation"
-import { PanelTypeName } from "@/types/components/operations-panel/index.types"
-import classNames from "classnames"
+import { mapWrapperClasses } from "@/lib/dashboard/data/classes"
 import { useSearchParams } from "next/navigation"
-import { useState } from "react"
 import styles from "./index.module.css"
 
 export default function Dashboard() {
   const searchParams = useSearchParams()
-
   const operationID = searchParams.get('operation-id')
-
-  const [operationsPanelType, setOperationsPanelType] = useState<PanelTypeName>(PanelTypeName.List)
-
-  const mapWrapperClasses = classNames({
-    [styles.mapWrapper]: true,
-    [styles.selectionRequiredWrapper]: !operationID
-  })
 
   return <div className={styles.container}>
     <Navigation />
     <div className={styles.dashboardContent}>
       <div className={styles.operationsPanelWrapper}>
-        <OperationsPanel type={operationsPanelType} operationID={operationID} />
+        <OperationsPanel operationID={operationID} />
       </div>
       <div className={styles.operationOverviewWrapper}>
         <div className={styles.overviewHeader}>
@@ -38,10 +28,10 @@ export default function Dashboard() {
             <Button text={"Run Simulation"} onClick={() => null} size={"Small"} variant={"Primary"} />
           </div>
         </div>
-        <div className={mapWrapperClasses}>
+        <div className={mapWrapperClasses(operationID)}>
           {!operationID ? <div className={styles.selectionRequiredContainer}>
             <span>Select or Join an operation to view map</span>
-          </div> : <GoogleMaps />}
+          </div> : <GoogleMaps operationID={operationID} />}
         </div>
       </div>
     </div>

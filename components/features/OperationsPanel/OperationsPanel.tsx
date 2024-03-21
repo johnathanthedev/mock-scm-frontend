@@ -5,10 +5,10 @@ import OperationDetails from "./partials/OperationDetails/OperationDetails";
 import OperationsList from "./partials/OperationsList/OperationsList";
 import styles from "./styles.module.css";
 
-const OperationsPanel = ({ type, operationID }: Props) => {
+const OperationsPanel = ({ operationID }: Props) => {
   const router = useRouter();
 
-  const [panelType, setPanelType] = useState(type);
+  const [panelType, setPanelType] = useState(PanelTypeName.List);
   const [transitionClass, setTransitionClass] = useState('');
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -55,7 +55,7 @@ const OperationsPanel = ({ type, operationID }: Props) => {
     if (panelType === PanelTypeName.List) {
       return <OperationsList operationID={operationID} onClick={handleClick} />;
     }
-    return <OperationDetails goBack={goToOperationsList} />;
+    return <OperationDetails goBack={goToOperationsList} operationID={operationID} />;
   };
 
   return (
