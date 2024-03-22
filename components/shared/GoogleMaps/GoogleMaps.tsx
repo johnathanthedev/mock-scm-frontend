@@ -1,3 +1,4 @@
+import { WS_URL } from '@/config/constants';
 import { useAlert } from '@/global-state/alert/alert.context';
 import { generateCurvedPath } from '@/lib/google-maps/curvature';
 import { aubergineTheme, markerIcon } from '@/lib/google-maps/theme';
@@ -112,7 +113,7 @@ export default function GoogleMaps({ }: Props) {
   }, [loading, routes]);
 
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:8080/ws?operation-id=${operationID}`);
+    const ws = new WebSocket(`${WS_URL}/ws?operation-id=${operationID}`);
     ws.onopen = () => console.log('Connected to WS');
     ws.onmessage = (event) => {
       const messageData = JSON.parse(event.data);
