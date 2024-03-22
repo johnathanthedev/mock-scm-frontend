@@ -5,11 +5,15 @@ import { listRoutes } from '@/services/routes-service';
 import { Props } from '@/types/components/google-maps/index.types';
 import { RouteDto } from '@/types/services/routes-service.types';
 import { Loader } from '@googlemaps/js-api-loader';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import Loading from '../Loading/Loading';
 import styles from "./index.module.css";
 
-export default function GoogleMaps({ operationID }: Props) {
+export default function GoogleMaps({ }: Props) {
+  const searchParams = useSearchParams()
+  const operationID = searchParams.get('operation-id')
+
   const { triggerAlert } = useAlert();
   const [routes, setRoutes] = useState<Array<RouteDto> | null>(null);
   const [loading, setLoading] = useState(true);
@@ -147,8 +151,19 @@ export default function GoogleMaps({ operationID }: Props) {
     };
   }, [operationID]);
 
-  return <div className={`${styles.container} w-full`}>
-    {loading ? <div className={styles.loadingWrapper}>
+  const renderContent = () => {
+    if (!operationID) return <div className={styles.selectionRequiredContainer}>
+      <span>Select or Join an operation to view map</span>
+    </div>
+
+    if (loading) return <div className={styles.loadingWrapper}>
       <Loading color={'var(--brand-color)'} />
-    </div> : <div ref={mapRef} className={`h-full w-full`} />}  </div>;
+    </div>
+
+    return <div ref={mapRef} className={`h-full w-full`} />
+  }
+
+  return <div className={`${styles.container} w-full`}>
+    {renderContent()}
+  </div>;
 }

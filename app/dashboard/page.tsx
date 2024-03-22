@@ -6,19 +6,18 @@ import GoogleMaps from "@/components/shared/GoogleMaps/GoogleMaps"
 import Navigation from "@/components/shared/Navigation/Navigation"
 import { OperationInformationProvider } from "@/global-state/operation-information/operation-information.provider"
 import { mapWrapperClasses } from "@/lib/dashboard/data/classes"
-import { useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 import styles from "./index.module.css"
 
 export default function Dashboard() {
-  const searchParams = useSearchParams()
-  const operationID = searchParams.get('operation-id')
-
   return <OperationInformationProvider>
     <div className={styles.container}>
       <Navigation />
       <div className={styles.dashboardContent}>
         <div className={styles.operationsPanelWrapper}>
-          <OperationsPanel operationID={operationID} />
+          <Suspense>
+            <OperationsPanel />
+          </Suspense>
         </div>
         <div className={styles.operationOverviewWrapper}>
           <div className={styles.overviewHeader}>
@@ -30,11 +29,11 @@ export default function Dashboard() {
               <Button text={"Run Simulation"} onClick={() => null} size={"Small"} variant={"Primary"} />
             </div>
           </div>
-          <div className={mapWrapperClasses(operationID)}>
-            {!operationID ? <div className={styles.selectionRequiredContainer}>
-              <span>Select or Join an operation to view map</span>
-            </div> : <GoogleMaps operationID={operationID} />}
-          </div>
+          <Suspense>
+            <div className={mapWrapperClasses()}>
+              <GoogleMaps />
+            </div>
+          </Suspense>
         </div>
       </div>
     </div>

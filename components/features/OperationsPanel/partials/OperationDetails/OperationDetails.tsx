@@ -52,6 +52,7 @@ const OperationDetails = ({
     }
 
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [operationID, triggerAlert])
 
   return (

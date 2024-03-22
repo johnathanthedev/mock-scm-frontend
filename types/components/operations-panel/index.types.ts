@@ -1,5 +1,4 @@
 export interface Props {
-  operationID: null | string;
 }
 
 export enum PanelTypeName {

@@ -1,12 +1,15 @@
 import { useOperationInformation } from "@/global-state/operation-information/operation-information.context";
 import { PanelTypeName, Props } from "@/types/components/operations-panel/index.types";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import OperationDetails from "./partials/OperationDetails/OperationDetails";
 import OperationsList from "./partials/OperationsList/OperationsList";
 import styles from "./styles.module.css";
 
-const OperationsPanel = ({ operationID }: Props) => {
+const OperationsPanel = ({ }: Props) => {
+  const searchParams = useSearchParams()
+  const operationID = searchParams.get('operation-id')
+
   const router = useRouter();
   const { setBasicInfo } = useOperationInformation();
 
