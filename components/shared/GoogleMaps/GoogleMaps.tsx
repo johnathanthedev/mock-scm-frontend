@@ -11,38 +11,40 @@ import styles from "./index.module.css";
 
 export default function GoogleMaps({ operationID }: Props) {
   const { triggerAlert } = useAlert();
-
-  const [routes, setRoutes] = useState<null | Array<RouteDto>>(null);
+  const [routes, setRoutes] = useState<Array<RouteDto> | null>(null);
   const [loading, setLoading] = useState(true);
-  const mapRef = useRef(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const latestMarkerRef = useRef<google.maps.Marker | null>(null);
+  const mapInstanceRef = useRef<google.maps.Map | null>(null);
 
   useEffect(() => {
     const getData = async () => {
       try {
         if (operationID) {
           const { status, data } = await listRoutes(operationID);
-
           if (status !== 200) {
-            return
+            triggerAlert("Failed to fetch routes", "Danger");
+            setLoading(false);
+            return;
           }
 
-          setLoading(false);
           setRoutes(data);
+          setLoading(false);
         }
       } catch (error) {
-        if (error) {
-          triggerAlert("Sorry something went wrong", "Danger")
-        }
+        console.error(error);
+        triggerAlert("Sorry something went wrong", "Danger");
+        setLoading(false);
       }
-    }
+    };
 
-    getData();;
-  }, [operationID, triggerAlert])
+    getData();
+  }, [operationID, triggerAlert]);
 
   useEffect(() => {
     const initializeMap = async () => {
       if (!loading) {
-        if (!mapRef.current || !routes) return;
+        if (!mapRef.current) return;
 
         const loader = new Loader({
           apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY as string,
@@ -59,7 +61,9 @@ export default function GoogleMaps({ operationID }: Props) {
           styles: aubergineTheme,
         });
 
-        routes.forEach(route => {
+        mapInstanceRef.current = map;
+
+        routes && routes.forEach(route => {
           const startCoords = {
             lat: route.facility_coordinates.Lat,
             lng: route.facility_coordinates.Lng,
@@ -102,6 +106,46 @@ export default function GoogleMaps({ operationID }: Props) {
 
     initializeMap();
   }, [loading, routes]);
+
+  useEffect(() => {
+    const ws = new WebSocket(`ws://localhost:8080/ws?operation-id=${operationID}`);
+    ws.onopen = () => console.log('Connected to WS');
+    ws.onmessage = (event) => {
+      const messageData = JSON.parse(event.data);
+      const newPosition = { lat: messageData.Location.Lat, lng: messageData.Location.Lng };
+
+      if (latestMarkerRef.current) {
+        // Update the marker's position if it already exists
+        latestMarkerRef.current.setPosition(newPosition);
+      } else {
+        // Create a new marker and store its reference if it doesn't exist
+        const google = window.google;
+
+        latestMarkerRef.current = new google.maps.Marker({
+          position: newPosition,
+          map: mapInstanceRef.current,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 8,
+            fillColor: '#FF0000',
+            fillOpacity: 0.8,
+            strokeWeight: 2,
+            strokeColor: 'white',
+          },
+          title: "Latest Position",
+        });
+      }
+    };
+
+    ws.onclose = () => console.log('Disconnected from WS');
+    ws.onerror = (error) => console.error('WebSocket error: ', error);
+
+    // Cleanup WebSocket connection on unmount
+    return () => {
+      // TODO: Close connection and re-open for each operation
+      ws.close();
+    };
+  }, [operationID]);
 
   return <div className={`${styles.container} w-full`}>
     {loading ? <div className={styles.loadingWrapper}>
