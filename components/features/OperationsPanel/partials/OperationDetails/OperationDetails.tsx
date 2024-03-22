@@ -1,5 +1,7 @@
 import ActionText from "@/components/shared/ActionText/ActionText";
+import Loading from "@/components/shared/Loading/Loading";
 import { useAlert } from "@/global-state/alert/alert.context";
+import { useOperationInformation } from "@/global-state/operation-information/operation-information.context";
 import { getOperation } from "@/services/operations-service";
 import { Props } from "@/types/components/operations-panel/operation-details.types";
 import { OperationDto } from "@/types/services/operations-service.types";
@@ -13,8 +15,10 @@ const OperationDetails = ({
   operationID
 }: Props) => {
   const { triggerAlert } = useAlert();
+  const { setBasicInfo } = useOperationInformation();
 
   const [operationName, setOperationName] = useState<null | string>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
@@ -24,11 +28,21 @@ const OperationDetails = ({
 
           if (status !== 200) {
             triggerAlert("Unable to retrieve operation details", "Danger")
+            return goBack()
           }
 
-          const { Name }: OperationDto = data
+          const { ID, Name, Status, Joined }: OperationDto = data;
+
+          setBasicInfo({
+            id: ID,
+            name: Name,
+            status: Status,
+            joined: Joined
+          })
 
           setOperationName(Name);
+
+          setLoading(false);
         }
       } catch (error) {
         if (error) {
@@ -37,17 +51,18 @@ const OperationDetails = ({
       }
     }
 
-    getData();;
+    getData();
   }, [operationID, triggerAlert])
 
   return (
     <div className={classStyles(className)}>
-      <div className={styles.headerWrapper}>
+      {loading ? <div className={styles.loadingWrapper}>
+        <Loading color="var(--brand-color)" />
+      </div> : <div className={styles.headerWrapper}>
         <ActionText text={"Go back"} onClick={goBack} />
         <h1>{operationName}</h1>
-      </div>
-    </div>
-  )
+      </div>}
+    </div>)
 }
 
 export default OperationDetails

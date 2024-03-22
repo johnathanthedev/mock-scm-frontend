@@ -1,3 +1,4 @@
+import { useOperationInformation } from "@/global-state/operation-information/operation-information.context";
 import { PanelTypeName, Props } from "@/types/components/operations-panel/index.types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -7,6 +8,7 @@ import styles from "./styles.module.css";
 
 const OperationsPanel = ({ operationID }: Props) => {
   const router = useRouter();
+  const { setBasicInfo } = useOperationInformation();
 
   const [panelType, setPanelType] = useState(PanelTypeName.List);
   const [transitionClass, setTransitionClass] = useState('');
@@ -38,6 +40,13 @@ const OperationsPanel = ({ operationID }: Props) => {
   };
 
   const goToOperationsList = () => {
+    setBasicInfo({
+      id: null,
+      name: null,
+      joined: null,
+      status: null
+    })
+
     if (!isTransitioning) {
       setTransitionClass(styles['slide-out']);
       setTimeout(() => {
